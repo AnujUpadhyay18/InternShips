@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal</title>
+    <style>
+        /* Your existing CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header a {
+            color: white;
+            text-decoration: none;
+            background-color: #45a049;
+            padding: 10px 20px;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        header a:hover {
+            background-color: #3e8e41;
+        }
+        
+        h1 {
+            margin: 0;
+        }
+        
+        main {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex: 1;
+        }
+        
+        .job-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            width: 300px;
+            position: relative;
+        }
+        
+        .job-card h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+        
+        .job-card p {
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .job-card button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+        
+        .job-card button:hover {
+            background-color: #45a049;
+        }
+        
+        .apply-form {
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+        }
+        
+        label, select, input[type="file"] {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        input[type="file"] {
+            padding: 5px;
+        }
+
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Job Portal</h1>
+        <a href="/sign">Sign Up</a>
+        <a href="/owner/adminLogin">Admin</a>
+        
+
+    </header>
+
+    <main>
+       <% posts.forEach((obj, index) => { %>
+        <div class="job-card">
+            <h2><%= obj.jobTitle  %></h2>
+            <p><strong>Company:</strong> <%= obj.company  %></p>
+            <p><strong>Location:</strong> <%= obj.location  %></p>
+            <p><strong>Salary:</strong> <%= obj.salary  %></p>
+            <p><strong>Description:</strong> <%= obj.jobDescription  %></p>
+            
+            <button onclick="handleApply(<%= index %>, '<%= token %>')">Apply Now</button>
+
+
+            <div class="apply-form" id="applyForm<%= index %>">
+                <form action="/user/apply" method='post' enctype="multipart/form-data" id="jobApplicationForm<%= index %>" onsubmit="return validateForm(<%= index %>)">
+                    <label for="jobRole<%= index %>">Select Job Role:</label>
+                    <select id="jobRole<%= index %>" name="jobRole" required>
+                        <option value="" disabled selected>Select a job role</option>
+                        <option value="developer">Developer</option>
+                        <option value="designer">Designer</option>
+                        <option value="manager">Manager</option>
+                    </select>
+
+                    <label for="resume<%= index %>">Upload Resume (PDF only):</label>
+                    <input type="file" id="resume<%= index %>" name="resume" accept=".pdf" required>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+     <% }) %>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Job Portal</p>
+    </footer>
+    
+    <script>
+        function handleApply(index, token) {
+            console.log('Received token:', token); // Debugging line
+    
+            if (!token) {
+                alert("Please sign in to apply for this job.");
+                return;
+            }
+    
+            const form = document.getElementById('applyForm' + index);
+            if (form) {
+                form.style.display = 'block';
+            } else {
+                console.error('Form not found for index:', index);
+            }
+        }
+
+        function validateForm(index) {
+            const jobRole = document.getElementById('jobRole' + index).value;
+            const resume = document.getElementById('resume' + index).value;
+
+            if (jobRole === "") {
+                alert("Please select a job role.");
+                return false;
+            }
+
+            if (resume === "") {
+                alert("Please upload your resume.");
+                return false;
+            }
+
+            alert("Form submitted successfully!");
+            return true; 
+        }
+    </script>
+</body>
+</html>

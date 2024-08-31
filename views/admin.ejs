@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page - Job Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label, input, textarea, select, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        input, textarea, select {
+            padding: 10px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin - Create Job Posting</h1>
+    </header>
+   <h1> Resumes <a href="/owner/resumes"> Click Hear</a></h1>
+    <main>
+        <form id="jobPostForm" action="/owner/job" method="POST">
+            <label for="jobTitle">Job Title:</label>
+            <input type="text" id="jobTitle" name="jobTitle" required>
+
+            <label for="company">Company:</label>
+            <input type="text" id="company" name="company" required>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="salary">Salary:</label>
+            <input type="text" id="salary" name="salary" required>
+
+            <label for="jobDescription">Job Description:</label>
+            <textarea id="jobDescription" name="jobDescription" rows="5" required></textarea>
+
+            <button type="submit">Create Job Post</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Job Portal</p>
+    </footer>
+
+    <!-- <script>
+        document.getElementById('jobPostForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            alert('Job posting created successfully!');
+        });
+    </script> -->
+</body>
+</html>
